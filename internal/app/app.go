@@ -7,11 +7,21 @@ import (
 	"syscall"
 
 	"github.com/farbautie/gotiny/config"
+	"github.com/farbautie/gotiny/pkg/database"
 	"github.com/farbautie/gotiny/pkg/server"
 )
 
 func Run(config *config.Config) {
+	log.Printf("Connected to database")
+	db, err := database.New(config, database.MaxOpenConns(config.Database.PoolSize))
+	if err != nil {
+		log.Fatalf("Error creating database pool: %s", err)
+	}
+	defer db.Close()
+
 	r := NewRouter()
+
+	log.Printf("Starting server on port %s", config.Http.Port)
 	srv := server.New(r, server.Port(config.Http.Port))
 
 	interrupt := make(chan os.Signal, 1)
