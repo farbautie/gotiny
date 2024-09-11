@@ -1,7 +1,13 @@
 package handlers
 
-type Handler struct{}
+import "github.com/farbautie/gotiny/pkg/database/repositories"
 
-func New() *Handler {
-	return &Handler{}
+type Handler struct {
+	repository *repositories.Repositories
+}
+
+func New(rp *repositories.Repositories) *Handler {
+	return &Handler{
+		repository: rp,
+	}
 }

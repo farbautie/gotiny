@@ -4,11 +4,12 @@ import (
 	"net/http"
 
 	"github.com/farbautie/gotiny/internal/app/handlers"
+	"github.com/farbautie/gotiny/pkg/database/repositories"
 )
 
-func NewRouter() *http.ServeMux {
+func NewRouter(rp *repositories.Repositories) *http.ServeMux {
 	router := http.NewServeMux()
-	handlers := handlers.New()
+	handlers := handlers.New(rp)
 
 	router.HandleFunc("GET /api/v1/shorten/{shorten_url}", handlers.GetShortenUrl)
 	router.HandleFunc("POST /api/v1/shorten", handlers.ShortenUrl)

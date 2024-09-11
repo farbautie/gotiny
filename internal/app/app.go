@@ -8,6 +8,7 @@ import (
 
 	"github.com/farbautie/gotiny/config"
 	"github.com/farbautie/gotiny/pkg/database"
+	"github.com/farbautie/gotiny/pkg/database/repositories"
 	"github.com/farbautie/gotiny/pkg/server"
 )
 
@@ -18,8 +19,8 @@ func Run(config *config.Config) {
 		log.Fatalf("Error creating database pool: %s", err)
 	}
 	defer db.Close()
-
-	r := NewRouter()
+	rp := repositories.New(db)
+	r := NewRouter(rp)
 
 	log.Printf("Starting server on port %s", config.Http.Port)
 	srv := server.New(r, server.Port(config.Http.Port))
