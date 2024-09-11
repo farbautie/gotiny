@@ -10,7 +10,7 @@ Simplifies and manages long URLs quickly and reliably.
 
 ## Arquitecture
 
-![Gotiny Architecture](https://github.com/farbautie/gotiny/tree/main/docs/url-shortener-architecture)
+![Gotiny Architecture](./docs/url-shortener-architecture.png)
 
 ## Requirements
 
