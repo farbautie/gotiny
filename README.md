@@ -36,7 +36,8 @@ The endpoint validates the body of the request and return a
 {
   "id": "1",
   "url": "https://www.example.com/some/long/url",
-  "shortCode": "abc123",
+  "short_url": "abc123",
+  "hits": 39,
   "createdAt": "2021-09-01T12:00:00Z",
   "updatedAt": "2021-09-01T12:00:00Z"
 }
@@ -59,7 +60,8 @@ The endpoint returns a 200 OK status code with the original URL
 {
   "id": "1",
   "url": "https://www.example.com/some/long/url",
-  "shortCode": "abc123",
+  "short_url": "abc123",
+  "hits": 39,
   "createdAt": "2021-09-01T12:00:00Z",
   "updatedAt": "2021-09-01T12:00:00Z"
 }
@@ -87,7 +89,8 @@ The endpoint validates the body of the request and return a
 {
   "id": "1",
   "url": "https://www.example.com/some/new/long/url",
-  "shortCode": "abc123",
+  "short_url": "abc123",
+  "hits": 39,
   "createdAt": "2021-09-01T12:00:00Z",
   "updatedAt": "2021-09-01T12:00:00Z"
 }
@@ -121,7 +124,8 @@ The endpoint returns a 200 OK status code with the statistics
 {
   "id": "1",
   "url": "https://www.example.com/some/long/url",
-  "shortCode": "abc123",
+  "short_url": "abc123",
+  "hits": 39,
   "createdAt": "2021-09-01T12:00:00Z",
   "updatedAt": "2021-09-01T12:00:00Z",
   "hits": 10
