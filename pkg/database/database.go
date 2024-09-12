@@ -33,7 +33,7 @@ func New(config *config.Config, options ...Options) (*Database, error) {
 		option(database)
 	}
 
-	pool, err := sql.Open("postgres", config.Database.DATABASE_URL)
+	pool, err := sql.Open("postgres", config.Database.DATABASE_URL+"?sslmode=disable")
 	if err != nil {
 		return nil, err
 	}
