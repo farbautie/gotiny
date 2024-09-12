@@ -133,3 +133,31 @@ func (h *Handler) DeleteShortenUrl(w http.ResponseWriter, r *http.Request) {
 
 	h.respondJSON(w, http.StatusOK, map[string]string{"message": "Link deleted"})
 }
+
+func (h *Handler) GetShortenStats(w http.ResponseWriter, r *http.Request) {
+	parts := strings.Split(r.URL.Path, "/")
+	if len(parts) <= 5 || parts[1] != "api" || parts[2] != "v1" || parts[3] != "shorten" || parts[4] != "stats" {
+		h.handleError(w, http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	shortUrl := parts[5]
+	link, err := h.Repository.GetByShortUrl(shortUrl)
+	if err != nil {
+		h.handleError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if link == nil {
+		h.handleError(w, http.StatusNotFound, "Link not found")
+		return
+	}
+
+	stats, err := h.Repository.GetStats(link.ID)
+	if err != nil {
+		h.handleError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	h.respondJSON(w, http.StatusOK, stats)
+}

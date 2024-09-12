@@ -56,7 +56,7 @@ func (r *Repositories) Update(id string, link *entities.Link) error {
 
 func (r *Repositories) UpdateStats(id string) (*entities.Link, error) {
 	var link entities.Link
-	query := `UPDATE links SET hits = hits + 1 WHERE id = $1 AND deleted_at IS NULL RETURNING id, url, short_url, hits, created_at, updated_at;`
+	query := `UPDATE links SET hits = hits + 1 WHERE id = $1 AND deleted_at IS NULL RETURNING id, url, short_url, created_at, updated_at;`
 	result, err := r.pool.Query(query, id)
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (r *Repositories) UpdateStats(id string) (*entities.Link, error) {
 		return nil, nil
 	}
 
-	err = result.Scan(&link.ID, &link.Url, &link.ShortUrl, &link.Hits, &link.CreatedAt, &link.UpdatedAt)
+	err = result.Scan(&link.ID, &link.Url, &link.ShortUrl, &link.CreatedAt, &link.UpdatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -88,4 +88,24 @@ func (r *Repositories) Delete(id string) error {
 	}
 
 	return nil
+}
+
+func (r *Repositories) GetStats(id string) (*entities.Link, error) {
+	var link entities.Link
+	query := `SELECT id, url, short_url, hits, created_at, updated_at FROM links WHERE id = $1 AND deleted_at IS NULL;`
+	result, err := r.pool.Query(query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer result.Close()
+	if !result.Next() {
+		return nil, nil
+	}
+
+	err = result.Scan(&link.ID, &link.Url, &link.ShortUrl, &link.Hits, &link.CreatedAt, &link.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &link, nil
 }
