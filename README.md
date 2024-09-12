@@ -8,6 +8,17 @@ Simplifies and manages long URLs quickly and reliably.
 > [!IMPORTANT]
 > This project built following the specifications from [roadmap.sh](https://roadmap.sh/projects/url-shortening-service)
 
+## Installation
+
+```bash
+git clone https://github.com/gotiny/gotiny.git
+cd gotiny
+go mod tidy
+// create .env file, set environment variables: see .env.example
+docker-compose up -d // start postgres
+go run ./cmd/app/main.go // start app
+```
+
 ## Arquitecture
 
 ![Gotiny Architecture](./docs/url-shortener-architecture.png)
